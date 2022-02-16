@@ -7,34 +7,63 @@
 
 `Kijiji-Scraper` requires the following `python` dependencies: 
 
-* requests
-* BeautifulSoup
-* PyYaml
+* [requests](https://docs.python-requests.org/en/latest/)
+* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+* [PyYaml](https://pyyaml.org/wiki/PyYAMLDocumentation)
 
 ## Installation
 
 ### Manually
 
-You can install `Kijiji-Scraper` manually by running the following code:
+To install `Kijiji-Scraper` manually:
+
+1. Clone the repository by running the following code:
 
 ```bash
 git clone https://github.com/JGBMichalski/Kijiji-Scraper.git
 ```
 
-To install the dependencies, execute:
+2. Install the dependencies:
 
 ```bash
 pip install requests bs4 pyyaml
 ```
 
+3. Add all the required  the `config.yaml` file (*see the **Configuration** section.*).
+
+4. Run the program:
+
+```bash
+python3 kijiji.py
+```
+
 ### Docker
 
-*Documentation coming soon.*
+`Kijiji-Scraper` can be run in Docker, which will allow you to have things up and running fairly quickly with vary little configuration.
+
+1. Pull the docker image from `jgbmichalski/kijiji-scraper`:
+
+```bash
+docker pull jgbmichalski/kijiji-scraper
+```
+
+2. Run the docker container:
+
+```bash
+docker run -d --name kijiji-scraper -v /path/to/your/config:/config jgbmichalski/kijiji-scraper:latest
+```
+> *Note: If this is your first time running the container and you have not set functional email settings in the `config.yaml` file, an error will occur.*
+
+3. Configure the `config.yaml` file (*see the **Configuration** section.*).
+
+4. Try to run the container again.
+
+> By default, the Docker implementation will automatically check for new ads every two minutes. If you wish to change this, simply update or remove the `--interval` parameter in the dockerfile.
 
 ## Configuration
 
 The script **must read a configuration file to set mail server settings**. Default config file `config.yaml` is located in the root directory.
- - Ub the `config.yaml` file, set the `from`, `username`, `password` and `receiver` fields in config file.
+ - In the `config.yaml` file, set the `from`, `username`, `password` and `receiver` fields in config file.
  - You can specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.  
  - Alternatively you can use `--url URLs` to configure URLs to scrape and `--email` to set receivers addresses.
 
@@ -47,38 +76,36 @@ If you are using Gmail, you will have to enable less secure apps on your account
 
 ## Usage
  
- To run the program, simply execute `python3 main.py` from the root directory.
+ To run the program, simply execute `python3 kijiji.py` from the root directory.
 
-<!-- ```
-% kijiji --help           
-usage: kijiji [-h] [--conf File path] [--url URL [URL ...]]
-               [--email Email [Email ...]] [--skipmail] [--all]
-               [--ads File path] [--version]
+```
+% python3 kijiji.py --help
+usage: kijiji.py [-h] [--conf File path] [--url URL [URL ...]] 
+                  [--email Email [Email ...]] [--skipmail] [--all] 
+                  [--ads File path] [--interval N [N ...]] [--version]
 
-Kijiji scraper: Track ad informations and sends out an email when a new ads
-are found
+Kijiji scraper: Track ad information and send out emails when a new ads are found
 
 optional arguments:
   -h, --help            show this help message and exit
   --conf File path, -c File path
-                        The script * must read a configuration file to set
-                        mail server settings *. Default config file
-                        config.yalm is located in ~/.kijiji_scraper/
-                        (MacOS/Linux), APPDATA/.kijiji_scraper (Windows) or
-                        directly in the install folder.
+                        The script * must read a configuration file to set 
+                        mail server settings *. Default config file config.yaml
+                         is located in the root directly.
   --url URL [URL ...], -u URL [URL ...]
                         Kijiji seacrh URLs to scrape
   --email Email [Email ...], -e Email [Email ...]
                         Email recepients
-  --skipmail, -s        Do not send emails. This is useful for the first time
-                        you scrape a Kijiji as the current ads will be indexed
-                        and after removing the flag you will only be sent new
-                        ads.
+  --skipmail, -s        Do not send emails. This is useful for the first time 
+                        you scrape a Kijiji as the current ads will be indexed 
+                        and after removing the flag you will only be sent new ads.
   --all, -a             Consider all ads as new, do not load ads.json file
-  --ads File path       Load specific ads JSON file. Default file will be
-                        store in the config folder
+  --ads File path       Load specific ads JSON file. Default file will be store 
+                        in the config folder
+  --interval N [N ...], -i N [N ...]
+                        Time to wait between each loop
   --version, -V         Print Kijiji-Scraper version
-``` -->
+```
 
 
 ### Ad Storage

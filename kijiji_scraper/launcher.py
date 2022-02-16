@@ -10,7 +10,7 @@ from kijiji_scraper.email_client import EmailClient
 from kijiji_scraper.version import VERSION
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="""Kijiji scraper: Track ad informations and sends out an email when a new ads are found""")
+    parser = argparse.ArgumentParser(description="""Kijiji scraper: Track ad information and send out emails when a new ads are found""")
     parser.add_argument('--conf', '-c', metavar='File path', help="""The script * must read a configuration file to set mail server settings *. Default config file config.yaml is located in the root directly.""")
     parser.add_argument('--url', '-u', metavar="URL", help="Kijiji seacrh URLs to scrape", nargs='+', default=None)
     parser.add_argument('--email','-e', metavar="Email", help="Email recepients", nargs='+',  default=None)
