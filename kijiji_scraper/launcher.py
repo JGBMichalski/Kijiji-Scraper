@@ -39,8 +39,9 @@ def main():
         # Get configuration path
         filepath = config_path(args.conf)
         
+        # Get config values
         if filepath:
-            # Get config values
+            # Read from configuration file
             with open(filepath, "r") as config_file:
                 email_config, urls_to_scrape = yaml.safe_load_all(config_file)
             print("Loaded config file: %s"%filepath)
