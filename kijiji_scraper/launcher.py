@@ -30,7 +30,7 @@ def main():
         print('Version: {}'.format(VERSION))
         exit(0)
     else:
-        print('Runnining Kijiji-Scraper v{}\n\n'.format(VERSION))
+        print('-------------------------------\nRunnining Kijiji-Scraper v{}\n-------------------------------'.format(VERSION))
 
     if args.interval:
         loop = True # We will want to do multiple iterations
@@ -56,14 +56,8 @@ def main():
         ads_filepath=None
         if not args.all:
             print(' - Loading ads.json file...')
-            if args.ads: 
-                ads_filepath=args.ads
-            else:
-                # Find default ads.json file in PWD directory
-                if os.path.exists(os.path.abspath(os.getcwd()) + "/ads.json"): 
-                    ads_filepath="ads.json"
-                    print('   - Using ads.json in the current directory.')
-            print("   - Ads file: %s"%ads_filepath)
+            ads_filepath = ads_path(args.ads)
+            print('   - Ads file: {}'.format(ads_filepath))
         kijiji_scraper = KijijiScraper(ads_filepath)
     
         # Overwrite search URLs if specified
@@ -133,6 +127,22 @@ def config_path(conf):
     else:
         # Find the default config file in the install directory
         filepath=os.path.join(dname, "config.yaml")
+        if not os.path.exists(filepath):
+            filepath=None
+    return filepath
+
+def ads_path(ads):
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(os.path.dirname(abspath))
+
+    if ads: 
+        filepath=ads
+        if not os.path.exists(filepath):
+            print('   - Ads JSON file at {} does not exist. Creating a blank version...'.format(filepath))
+            shutil.copyfile(os.path.join(dname, "ads.json"), filepath)
+    else:
+        # Find default ads.json file in PWD directory
+        filepath=os.path.join(dname, "ads.json")
         if not os.path.exists(filepath):
             filepath=None
     return filepath

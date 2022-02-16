@@ -26,4 +26,4 @@ COPY ads.json /Kijiji-Scraper
 WORKDIR /Kijiji-Scraper
 
 # Setup Kijiji-Scraper if it is not already setup and execute Kijiji-Scraper once every 2 minutes using the docker config.yaml
-CMD python3 docker.py && python3 kijiji.py --conf /config/config.yaml --interval 120
+CMD python3 docker.py && python3 kijiji.py --conf /config/config.yaml --ads /config/ads.json --interval 120
