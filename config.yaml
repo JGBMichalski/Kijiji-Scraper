@@ -1,6 +1,6 @@
 # Replace the values in the fields below with your own info so the scraper can send out emails.
 
-# "sender" is the email address that will be sending out the emails. I made a throwaway gmail account for this.
+# "from" & "username" is the email address that will be sending out the emails. I made a throwaway gmail account for this.
 # "password" is the password for the sender account.
 # "receiver" is the email address that the sender email account will be sending the email to.
 # "smtp server" is the smtp server the sender email account uses. If the sender email is a gmail address you do not need to change this.
