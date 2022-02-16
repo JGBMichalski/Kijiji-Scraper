@@ -3,7 +3,7 @@ import time
 import sys
 import os
 import argparse
-from shutil import which
+import shutil
 
 from kijiji_scraper.kijiji_scraper import KijijiScraper
 from kijiji_scraper.email_client import EmailClient
@@ -122,12 +122,16 @@ def main():
 
 def config_path(conf):
     # Handle custom config file
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(os.path.dirname(abspath))
+    
     if conf:
         filepath=conf
+        if not os.path.exists(filepath):
+            print(' - Configuration file at {} does not exist. Creating it using the default template...'.format(filepath))
+            shutil.copyfile(os.path.join(dname, "config.yaml"), filepath)
     else:
         # Find the default config file in the install directory
-        abspath = os.path.abspath(__file__)
-        dname = os.path.dirname(os.path.dirname(abspath))
         filepath=os.path.join(dname, "config.yaml")
         if not os.path.exists(filepath):
             filepath=None

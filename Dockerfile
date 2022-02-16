@@ -16,10 +16,14 @@ RUN apt-get update && \
 RUN pip install requests bs4 pyyaml
 
 # Copy the setup python script to /usr/sbin
-COPY * /usr/sbin/
+COPY kijiji_scraper/* /Kijiji-Scraper/kijiji_scraper/
+COPY docker.py /Kijiji-Scraper
+COPY kijiji.py /Kijiji-Scraper
+COPY config.yaml /Kijiji-Scraper
+COPY ads.json /Kijiji-Scraper
 
 # Change the directory to /Kijiji-Scraper
 WORKDIR /Kijiji-Scraper
 
-# Setup Kijiji-Scraper if it is not already setup and execute Kijiji-Scraper once every 2 minutes
-CMD python3 /usr/sbin/docker.py && python3 kijiji.py --interval 120
+# Setup Kijiji-Scraper if it is not already setup and execute Kijiji-Scraper once every 2 minutes using the docker config.yaml
+CMD python3 docker.py && python3 kijiji.py --conf /config/config.yaml --interval 120
