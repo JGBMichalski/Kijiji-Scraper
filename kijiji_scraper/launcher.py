@@ -37,7 +37,7 @@ def main():
     else: 
         loop = False
 
-    while (loop):
+    while True:
         # Get configuration path
         filepath = config_path(args.conf)
         
@@ -113,6 +113,8 @@ def main():
         if (loop):
             print(' - Waiting {} seconds until next check...'.format(args.interval[0]))
             time.sleep(args.interval[0])
+        else:
+            sys.exit(0)
 
 def config_path(conf):
     # Handle custom config file
