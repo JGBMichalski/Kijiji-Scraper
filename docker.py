@@ -2,8 +2,8 @@ import os
 import requests
 
 cloneURL = 'https://github.com/JGBMichalski/Kijiji-Scraper.git'
-versionURL = 'https://raw.githubusercontent.com/JGBMichalski/Kijiji-Scraper/master/kijiji_scraper/version.py'
-filesRequired = ['/Kijiji-Scraper/kijiji.py', '/Kijiji-Scraper/config.yaml', '/Kijiji-Scraper/ads.json', '/Kijiji-Scraper/kijiji_scraper/version.py']
+versionURL = 'https://raw.githubusercontent.com/JGBMichalski/Kijiji-Scraper/master/VERSION'
+filesRequired = ['/Kijiji-Scraper/kijiji.py', '/Kijiji-Scraper/config.yaml', '/Kijiji-Scraper/ads.json', '/Kijiji-Scraper/VERSION']
 
 print('Running Setup...')
 # Check if Kijiji-Scraper main file exists
@@ -12,10 +12,10 @@ if os.path.exists(filesRequired[0]):
 
     # Get the html data from the version URL
     page = requests.get(versionURL)
-    gitVersion = page.content.decode('utf-8').split("'")[1]
+    gitVersion = page.content.decode('utf-8')
 
     with open(filesRequired[3], "r") as versionFile:
-        localVersion = versionFile.readline().split("'")[1]
+        localVersion = versionFile.readline()
 
     if (gitVersion != localVersion):
         print('   - The local version is out of date.')

@@ -7,7 +7,6 @@ import shutil
 
 from kijiji_scraper.kijiji_scraper import KijijiScraper
 from kijiji_scraper.email_client import EmailClient
-from kijiji_scraper.version import VERSION
 
 def parse_args():
     parser = argparse.ArgumentParser(description="""Kijiji scraper: Track ad information and send out emails when a new ads are found""")
@@ -26,11 +25,17 @@ def main():
     # parse the arguments 
     args = parse_args()
 
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(os.path.dirname(abspath))
+
+    with open(os.path.join(dname, "VERSION"), "r") as versionFile:
+        version = versionFile.readline()
+
     if args.version:
-        print('Version: {}'.format(VERSION))
+        print('Version: {}'.format(version))
         exit(0)
     else:
-        print('-------------------------------\nRunnining Kijiji-Scraper v{}\n-------------------------------'.format(VERSION))
+        print('-------------------------------\nRunnining Kijiji-Scraper v{}\n-------------------------------'.format(version))
 
     if args.interval:
         loop = True # We will want to do multiple iterations
