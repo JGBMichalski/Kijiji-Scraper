@@ -2,9 +2,9 @@ name: Kijiji-Scraper Docker Image
 
 on:
   push:
-    branches: [ master, docker ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, docker ]
+    branches: [ master ]
 
 jobs:
 
