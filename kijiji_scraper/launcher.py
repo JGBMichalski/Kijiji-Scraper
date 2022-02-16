@@ -27,8 +27,10 @@ def main():
     args = parse_args()
 
     if args.version:
-        print("Version:\t\t%s" %VERSION)
+        print('Version: {}'.format(VERSION))
         exit(0)
+    else:
+        print('Runnining Kijiji-Scraper v{}\n\n'.format(VERSION))
 
     if args.interval:
         loop = True # We will want to do multiple iterations
@@ -40,69 +42,82 @@ def main():
         filepath = config_path(args.conf)
         
         # Get config values
+        print(' - Loading configuration file...')
         if filepath:
             # Read from configuration file
             with open(filepath, "r") as config_file:
                 email_config, urls_to_scrape = yaml.safe_load_all(config_file)
-            print("Loaded config file: %s"%filepath)
+            print("   - Loaded config file: %s"%filepath)
         else:
-            print("No config file loaded")
-            email_config, urls_to_scrape = ({},{})
-            # Do not try to send mail if no config file is loaded
-            args.skipmail=True
+            print("   - ERROR: No config file loaded.")
+            sys.exit('No config file loaded.')
 
         # Initialize the KijijiScraper and email client
         ads_filepath=None
         if not args.all:
+            print(' - Loading ads.json file...')
             if args.ads: 
                 ads_filepath=args.ads
             else:
                 # Find default ads.json file in PWD directory
-                print(os.path.abspath(os.getcwd()))
                 if os.path.exists(os.path.abspath(os.getcwd()) + "/ads.json"): 
                     ads_filepath="ads.json"
-            print("Ads file: %s"%ads_filepath)
+                    print('   - Using ads.json in the current directory.')
+            print("   - Ads file: %s"%ads_filepath)
         kijiji_scraper = KijijiScraper(ads_filepath)
     
         # Overwrite search URLs if specified
-        if args.url: urls_to_scrape = [{'url':u} for u in args.url]
+        if args.url: 
+            print(' - Overwriting URLs with URLs specified from CLI...')
+            urls_to_scrape = [{'url':u} for u in args.url]
 
         # Nice quit if no URLs
-        if not urls_to_scrape :
-            print("You must supply at least one URL to scrape. Use --url or configure URLs in the config file.")
-            exit(-1)
+        print(' - Verifying that there are URLs to scrape...')
+        if not urls_to_scrape:
+            print('   - No URLs specified. Add URLs in the config.yaml file or use --url or configure URLs in the config file.')
+            sys.exit('No URLs specified. Add URLs in the config.yaml file or use --url or configure URLs in the config file.')
 
         # Scrape each url given in config file
+        print(' - Scraping URLs...')
         for url_dict in urls_to_scrape:
             url = url_dict.get("url")
             exclude_words = url_dict.get("exclude", [])
 
-            print("Scraping: %s"%url)
+            print('   - Scraping: {}'.format(url))
             if len(exclude_words):
-                print("Excluding: " + ", ".join(exclude_words))
+                print("     - Excluding: " + ", ".join(exclude_words))
 
             kijiji_scraper.set_exclude_list(exclude_words)
             ads, email_title = kijiji_scraper.scrape_kijiji_for_ads(url)
 
-            info_string = "Found %s new ads"%len(ads) \
-                if len(ads) != 1 else "Found 1 new ad"
-            print(info_string)
+            if len(ads) == 1:
+                print('     - Found 1 new ad:')
+            else:
+                print('     - Found {} new ads:'.format(len(ads)))
 
-            # Print ads summary list 
-            sys.stdout.buffer.write(get_ads_summary(ads).encode('utf-8'))
+           
+
+            # Print ads summary list
+            for ad_id in ads:
+                print('       - {} | {}'.format(str(ads[ad_id]['Title']), str(ads[ad_id]['Url'])))
+
             # Send email
             if not args.skipmail and len(ads):
                 email_client = EmailClient(email_config)
                 # Overwrite email recepeients if specified
-                if args.email: email_client.receiver=','.join(args.email)
+                if args.email: 
+                    email_client.receiver=','.join(args.email)
                 email_client.mail_ads(ads, email_title)
-                print("Email sent to %s"%email_client.receiver)
-            else: print("No email sent")
+                print('     - Email sent to {}'.format(email_client.receiver))
+            else: 
+                print("     - No email sent.")
 
-        if ads_filepath: kijiji_scraper.save_ads()
+        if ads_filepath: 
+            print(' - Updating ad list...')
+            kijiji_scraper.save_ads()
 
         if (loop):
-            print('Waiting {} seconds until next check...'.format(args.interval[0]))
+            print(' - Waiting {} seconds until next check...'.format(args.interval[0]))
             time.sleep(args.interval[0])
 
 def config_path(conf):
@@ -117,23 +132,6 @@ def config_path(conf):
         if not os.path.exists(filepath):
             filepath=None
     return filepath
-
-def get_ads_summary(ads):
-    string=''
-    if not ads: return string
-    header = ("Title", "Url")
-    title_w=20
-    # Determine the longest width for Title column
-    for ad_id in ads:
-        title_w=len(ads[ad_id]['Title'])+4 if ads[ad_id] and len(ads[ad_id]['Title'])>title_w else title_w
-    frow="{:<%d} {}"%title_w
-    string+=frow.format(*header)
-
-    for ad_id in ads:
-        string+='\n'
-        string+=frow.format(str(ads[ad_id]['Title']), str(ads[ad_id]['Url']))
-
-    return string+'\n'
 
 def find_file(env_location, potential_files, default_content="", create=False):
     potential_paths=[]
