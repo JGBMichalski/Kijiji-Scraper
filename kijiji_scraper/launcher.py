@@ -7,7 +7,7 @@ from shutil import which
 
 from kijiji_scraper.kijiji_scraper import KijijiScraper
 from kijiji_scraper.email_client import EmailClient
-from . import VERSION
+from kijiji_scraper.version import VERSION
 
 def parse_args():
     parser = argparse.ArgumentParser(description="""Kijiji scraper: Track ad informations and sends out an email when a new ads are found""")
