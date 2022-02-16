@@ -15,8 +15,8 @@ RUN apt-get update && \
 # Install python dependencies
 RUN pip install requests bs4 pyyaml
 
-# Download and setup Kijiji-Scraper
-RUN git clone https://github.com/JGBMichalski/Kijiji-Scraper.git
+# Copy the setup python script to /usr/sbin
+COPY docker.py /usr/sbin
 
-# Execute Kijiji-Scraper once every minute
-CMD python3 /Kijiji-Scraper/kijiji.py --interval 60
+# Setup Kijiji-Scraper if it is not already setup and execute Kijiji-Scraper once every minute
+CMD python3 /usr/sbin/docker.py && python3 /Kijiji-Scraper/kijiji.py --interval 60
