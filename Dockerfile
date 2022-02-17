@@ -21,6 +21,7 @@ COPY docker.py /Kijiji-Scraper
 COPY kijiji.py /Kijiji-Scraper
 COPY config.yaml /Kijiji-Scraper
 COPY ads.json /Kijiji-Scraper
+COPY VERSION /Kijiji-Scraper
 
 # Change the directory to /Kijiji-Scraper
 WORKDIR /Kijiji-Scraper
