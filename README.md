@@ -1,4 +1,6 @@
-# Kijiji-Scraper 1.0.0
+# Kijiji-Scraper 1.0.1
+
+[![Docker Image](https://github.com/JGBMichalski/Kijiji-Scraper/actions/workflows/docker-image.yml/badge.svg?branch=master)](https://github.com/JGBMichalski/Kijiji-Scraper/actions/workflows/docker-image.yml)
 
 ## Summary
 `Kijiji-Scraper` is used to track Kijiji ad information and sends out emails when a new ads are found. This project was originally developed by [@CRutkowski](https://github.com/CRutkowski), but due to inactivity and the program breaking, it has since undergone some serious changes.
