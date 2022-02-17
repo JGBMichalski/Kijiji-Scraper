@@ -1,9 +1,21 @@
-# Kijiji-Scraper 1.0.1
+<h1 align="center">Kijiji Scraper</h1>
+<p align="center">
+  <a href="https://github.com/JGBMichalski/Kijiji-Scraper"><img alt="Build Status" src="https://github.com/JGBMichalski/Kijiji-Scraper/actions/workflows/docker-image.yml/badge.svg?branch=master" height="20"/></a>
+  <a href="https://github.com/JGBMichalski/Kijiji-Scraper/issues"><img alt="Issues open" src="https://img.shields.io/github/issues/jgbmichalski/Kijiji-Scraper?label=Issues" height="20"/></a>
+  <a href="https://github.com/JGBMichalski/Kijiji-Scraper"><img alt="Last commit" src="https://img.shields.io/github/last-commit/jgbmichalski/kijiji-scraper?label=Last%20Commit" height="20"/></a>
+  <a href="https://github.com/JGBMichalski/Kijiji-Scraper/releases"><img alt="Latest version" src="https://img.shields.io/github/v/release/jgbmichalski/kijiji-scraper?label=Latest%20Release" height="20"/></a>
+  <a href="https://github.com/JGBMichalski/Kijiji-Scraper"><img alt="Github Hits" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FJGBMichalski%2FKijiji-Scraper&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=Hits&edge_flat=false" height="20"/></a>
+  <a href="https://hub.docker.com/r/jgbmichalski/kijiji-scraper"><img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/jgbmichalski/kijiji-scraper?label=Docker%20Pulls" height="20"/></a>
+</p>
+<p align="center">
+  <b>Kijiji-Scraper is used to track Kijiji ad information and will send out emails when a new ads are found. This project was originally developed by <a href="https://github.com/CRutkowski">CRutkowski</a>, but due to inactivity and the program breaking, it has since undergone some serious changes.</b>
+  
+<p align="center">
+	<a href="https://github.com/JGBMichalski/Kijiji-Scraper/releases">Download & Release Notes</a>
+</p>
+<br />
 
-[![Docker Image](https://github.com/JGBMichalski/Kijiji-Scraper/actions/workflows/docker-image.yml/badge.svg?branch=master)](https://github.com/JGBMichalski/Kijiji-Scraper/actions/workflows/docker-image.yml)
-
-## Summary
-`Kijiji-Scraper` is used to track Kijiji ad information and sends out emails when a new ads are found. This project was originally developed by [@CRutkowski](https://github.com/CRutkowski), but due to inactivity and the program breaking, it has since undergone some serious changes.
+---
 
 ## Dependencies
 
@@ -12,6 +24,8 @@
 * [requests](https://docs.python-requests.org/en/latest/)
 * [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 * [PyYaml](https://pyyaml.org/wiki/PyYAMLDocumentation)
+
+---
 
 ## Installation
 
@@ -62,6 +76,8 @@ docker run -d --name kijiji-scraper -v /path/to/your/config:/config jgbmichalski
 
 > By default, the Docker implementation will automatically check for new ads every two minutes. If you wish to change this, simply update or remove the `--interval` parameter in the dockerfile.
 
+---
+
 ## Configuration
 
 The script **must read a configuration file to set mail server settings**. Default config file `config.yaml` is located in the root directory.
@@ -75,6 +91,8 @@ If you are using Gmail, you will have to enable less secure apps on your account
 
 1. In your Google account, go to `My Account -> Sign in & security -> Connected apps & sites`.
 2. Turn `Allow less secure apps` to `On`.
+
+---
 
 ## Usage
  
