@@ -22,11 +22,13 @@ class EmailClient():
         msg['From'] = self.from_email
         msg['To'] = self.receiver
 
-        server = smtplib.SMTP_SSL(self.smtp_server, self.smtp_port)
+        server = smtplib.SMTP(self.smtp_server, self.smtp_port)
 
         server.ehlo()
+        server.starttls()
+        server.ehlo()
         server.login(self.username, self.password)
-        server.send_message(msg)
+        server.send_message(msg, self.username, self.receiver)
 
         server.quit()
 
