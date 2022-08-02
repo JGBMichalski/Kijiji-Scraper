@@ -85,12 +85,13 @@ The script **must read a configuration file to set mail server settings**. Defau
  - You can specify the Kijji URLs you wish to scrape at the bottom of the config file. There are a few examples in the config to show the syntax.  
  - Alternatively you can use `--url URLs` to configure URLs to scrape and `--email` to set receivers addresses.
 
+### Using Outlook
+
+If you are using Outlook, simply enter the username and password of the Outlook account you wish to use into the configuration settings. If you are getting an errors, take a look at the recommended SMTP settings inside of your account settings and make sure the configuration matches them.
+
 ### Using Gmail
 
-If you are using Gmail, you will have to enable less secure apps on your account. To do this, simply:
-
-1. In your Google account, go to `My Account -> Sign in & security -> Connected apps & sites`.
-2. Turn `Allow less secure apps` to `On`.
+It is important to note that **GMail is no longer supported** due to them removing access to SMTP with just a username and password.
 
 ---
 

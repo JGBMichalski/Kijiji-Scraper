@@ -10,8 +10,8 @@ from: sender@example.com
 username: sender@example.com
 password: Sender Password
 receiver: receiver@example.com
-smtp server: smtp.gmail.com
-smtp port: 465
+smtp server: smtp.office365.com
+smtp port: 587
 
 ---
 # Set the URLs you wish to scrape below with an optional list of words to exclude per URL.
